@@ -39,18 +39,33 @@ module.exports = {
       .then((user) => res.json(user))
       .catch((err) => res.status(500).json(err));
   },
-  // Delete a  user and remove them from the course
+  // Delete a  user and remove them from the user
   deleteUser(req, res) {
-    User.findOneAndRemove({ _id: req.params.user }).then((user) =>
-      !user
-        ? res.status(404).json({ message: "No such student exists" })
-        : Course.findOneAndUpdate(
-            { users: req.params.userId },
-            { $pull: { users: req.params.userId } },
-            { new: true }
-          )
-    );
+    User.findOneAndDelete({ _id: req.params.userId })
+      .then((user) =>
+        !user
+          ? res.status(404).json({ message: 'No course with that ID' })
+          : Thought.deleteMany({ _id: { $in: user.thoughts } })
+      )
+      .then(() => res.json({ message: 'Course and thoughts deleted!' }))
+      .catch((err) => res.status(500).json(err));
   },
+
+  updateUser(req, res) {
+   User.findOneAndUpdate(
+      { _id: req.params.userId },
+      { $set: req.body },
+      { runValidators: true, new: true }
+    )
+      .then((user) =>
+        !user
+          ? res.status(404).json({ message: 'No user with this id!' })
+          : res.json(user)
+      )
+      .catch((err) => res.status(500).json(err));
+  },
+};
+
 
   // Add an reaction to a user
   addReaction(req, res) {

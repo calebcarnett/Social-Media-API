@@ -44,28 +44,26 @@ module.exports = {
     User.findOneAndDelete({ _id: req.params.userId })
       .then((user) =>
         !user
-          ? res.status(404).json({ message: 'No course with that ID' })
+          ? res.status(404).json({ message: "No course with that ID" })
           : Thought.deleteMany({ _id: { $in: user.thoughts } })
       )
-      .then(() => res.json({ message: 'Course and thoughts deleted!' }))
+      .then(() => res.json({ message: "Course and thoughts deleted!" }))
       .catch((err) => res.status(500).json(err));
   },
 
   updateUser(req, res) {
-   User.findOneAndUpdate(
+    User.findOneAndUpdate(
       { _id: req.params.userId },
       { $set: req.body },
       { runValidators: true, new: true }
     )
       .then((user) =>
         !user
-          ? res.status(404).json({ message: 'No user with this id!' })
+          ? res.status(404).json({ message: "No user with this id!" })
           : res.json(user)
       )
       .catch((err) => res.status(500).json(err));
   },
-};
-
 
   // Add an reaction to a user
   addReaction(req, res) {
@@ -83,14 +81,14 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
+
   // Remove reaction from a user
   removeReaction(req, res) {
-    user
-      .findOneAndUpdate(
-        { _id: req.params.userId },
-        { $pull: { reaction: { reactionId: req.params.reactionId } } },
-        { runValidators: true, new: true }
-      )
+    User.findOneAndUpdate(
+      { _id: req.params.userId },
+      { $pull: { reaction: { reactionId: req.params.reactionId } } },
+      { runValidators: true, new: true }
+    )
       .then((user) =>
         !user
           ? res.status(404).json({ message: "No user found with that ID :(" })

@@ -1,4 +1,4 @@
-const router = require("express").router();
+const router = require("express").Router();
 
 const {
   getSingleThought,
@@ -9,3 +9,5 @@ const {
 router.route("/").get(getThoughts).post(createThought);
 
 router.route("/:thoughtId").get(getSingleThought).delete();
+
+module.exports = router;

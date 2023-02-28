@@ -47,7 +47,7 @@ module.exports = {
           ? res.status(404).json({ message: "No course with that ID" })
           : Thought.deleteMany({ _id: { $in: user.thoughts } })
       )
-      .then(() => res.json({ message: "Course and thoughts deleted!" }))
+      .then(() => res.json({ message: "User and thoughs deleted!" }))
       .catch((err) => res.status(500).json(err));
   },
 
@@ -65,35 +65,4 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
 
-  // need to change reaction to add and remove friends
-  addReaction(req, res) {
-    console.log("You are adding an assignment");
-    console.log(req.body);
-    User.findOneAndUpdate(
-      { _id: req.params.userId },
-      { $addToSet: { reactions: req.body } },
-      { runValidators: true, new: true }
-    )
-      .then((user) =>
-        !user
-          ? res.status(404).json({ message: "No user found with that ID :(" })
-          : res.json(user)
-      )
-      .catch((err) => res.status(500).json(err));
-  },
-
-  // Remove reaction from a user
-  removeReaction(req, res) {
-    User.findOneAndUpdate(
-      { _id: req.params.userId },
-      { $pull: { reaction: { reactionId: req.params.reactionId } } },
-      { runValidators: true, new: true }
-    )
-      .then((user) =>
-        !user
-          ? res.status(404).json({ message: "No user found with that ID :(" })
-          : res.json(user)
-      )
-      .catch((err) => res.status(500).json(err));
-  },
-};
+  

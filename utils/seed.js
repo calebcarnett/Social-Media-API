@@ -8,6 +8,7 @@ connection.once("open", async () => {
   try {
     // Delete existing users and thoughts if any exist
     await User.deleteMany({});
+
     await Thought.deleteMany({});
 
     // Create new users and thoughts

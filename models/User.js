@@ -1,10 +1,6 @@
 const { Schema, model } = require("mongoose");
 
 const userSchema = new Schema({
-  userID: {
-    type: Schema.Types.ObjectId,
-    default: () => new Types.ObjectId(),
-  },
   username: {
     type: String,
     required: true,
@@ -15,10 +11,7 @@ const userSchema = new Schema({
     type: String,
     required: true,
     unique: true,
-    validate: {
-      validator: () => Promise.resolve(false),
-      message: "Email validation failed",
-    },
+    match: [/.+\@.+\..+/],
   },
   thoughts: [{ type: Schema.Types.ObjectId, ref: "Thought" }],
   friends: [{ type: Schema.Types.ObjectId, ref: "User" }],

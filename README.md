@@ -5,6 +5,8 @@ API for a social network web application where users can share their thoughts, r
 
 ## Walkthrough
 
+Please watch the walkthrough [Video](https://drive.google.com/file/d/1lYnMOJHw9p0Cg6fMhrXgBqt_SkSd0XoS/view) to view the applications routes.
+
 ## Table of Contents
 
 - [Installation](#installation)

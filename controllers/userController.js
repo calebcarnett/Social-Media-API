@@ -65,7 +65,7 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
 
-  // Add an reaction to a user
+  // need to change reaction to add and remove friends
   addReaction(req, res) {
     console.log("You are adding an assignment");
     console.log(req.body);
